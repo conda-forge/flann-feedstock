@@ -11,13 +11,13 @@ source:
 
 build:
     number: 0
-    skip: true    # [win]
 
 requirements:
     build:
         - gcc     # [osx]
         - hdf5
         - cmake
+        - make    # [win]
     run:
         - libgcc  # [osx]
         - hdf5
