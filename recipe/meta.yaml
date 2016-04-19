@@ -10,10 +10,15 @@ source:
     md5: 774b74580e3cbc5b0d45c6ec345a64ae
 
 build:
-    number: 0
+    number: 1
+    features:
+        - vc9                [win and py27]
+        - vc10               [win and py34]
+        - vc14               [win and py35]
 
 requirements:
     build:
+        - python  # [win]
         - gcc     # [osx]
         - hdf5
         - cmake
