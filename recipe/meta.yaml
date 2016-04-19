@@ -32,11 +32,11 @@ test:
         - test -f $PREFIX/lib/libflann_s.a                                        # [unix]
         - test -f $PREFIX/lib/libflann.dylib                                      # [osx]
         - test -f $PREFIX/lib/libflann.so                                         # [linux]
-        - test -f $PREFIX/lib/libflann.dll                                        # [win]
         - test -f $PREFIX/lib/libflann_cpp_s.a                                    # [unix]
         - test -f $PREFIX/lib/libflann_cpp.dylib                                  # [osx]
         - test -f $PREFIX/lib/libflann_cpp.so                                     # [linux]
-        - test -f $PREFIX/lib/libflann_cpp.dll                                    # [osx]
+        - if not exist %PREFIX%\\Library\\lib\\libflann.lib exit 1                # [win]
+        - if not exist %PREFIX%\\Library\\bin\\libflann.dll exit 1                # [win]
 
 about:
     home: http://www.cs.ubc.ca/research/flann/
