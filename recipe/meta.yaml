@@ -27,6 +27,9 @@ requirements:
         - hdf5
 
 test:
+    requires:
+        - python    # [win]
+
     commands:
         # Verify libraries.
         - test -f $PREFIX/lib/libflann_s.a                                        # [unix]
