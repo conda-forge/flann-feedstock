@@ -28,18 +28,23 @@ requirements:
 
 test:
     requires:
-        - python    # [win]
+        - python {{ environ['PY_VER'] + '*' }}  # [win]
 
     commands:
         # Verify libraries.
-        - test -f $PREFIX/lib/libflann_s.a                                        # [unix]
-        - test -f $PREFIX/lib/libflann.dylib                                      # [osx]
-        - test -f $PREFIX/lib/libflann.so                                         # [linux]
-        - test -f $PREFIX/lib/libflann_cpp_s.a                                    # [unix]
-        - test -f $PREFIX/lib/libflann_cpp.dylib                                  # [osx]
-        - test -f $PREFIX/lib/libflann_cpp.so                                     # [linux]
-        - if not exist %PREFIX%\\Library\\lib\\libflann.lib exit 1                # [win]
-        - if not exist %PREFIX%\\Library\\bin\\libflann.dll exit 1                # [win]
+        - test -d $PREFIX/include/flann                                    # [unix]
+        - test -f $PREFIX/lib/libflann_s.a                                 # [unix]
+        - test -f $PREFIX/lib/libflann.dylib                               # [osx]
+        - test -f $PREFIX/lib/libflann.so                                  # [linux]
+        - test -f $PREFIX/lib/libflann_cpp_s.a                             # [unix]
+        - test -f $PREFIX/lib/libflann_cpp.dylib                           # [osx]
+        - test -f $PREFIX/lib/libflann_cpp.so                              # [linux]
+        - if not exist %PREFIX%\\Library\\lib\\flann.lib exit 1            # [win]
+        - if not exist %PREFIX%\\Library\\lib\\flann_cpp_s.lib exit 1      # [win]
+        - if not exist %PREFIX%\\Library\\lib\\flann_s.lib exit 1          # [win]
+        - if not exist %PREFIX%\\Library\\bin\\flann.dll exit 1            # [win]
+        - if not exist %PREFIX%\\Library\\bin\\flann_cpp.dll exit 1        # [win]
+        - if not exist %PREFIX%\\Library\\include\\flann exit 1            # [win]
 
 about:
     home: http://www.cs.ubc.ca/research/flann/
