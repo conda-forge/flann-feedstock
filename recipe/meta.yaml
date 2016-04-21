@@ -8,6 +8,10 @@ source:
     fn: flann-{{ version }}.tar.gz
     url: https://github.com/mariusmuja/flann/archive/{{ version }}.tar.gz
     md5: 774b74580e3cbc5b0d45c6ec345a64ae
+    
+    patches:
+      # Borrowed from https://github.com/mariusmuja/flann/issues/82
+      - win64_serialization.patch  # [win64]
 
 build:
     number: 1
