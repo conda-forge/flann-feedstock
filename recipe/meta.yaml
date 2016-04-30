@@ -16,11 +16,11 @@ build:
 requirements:
     build:
         - gcc     # [unix]
-        - hdf5
+        - hdf5 1.8.15*
         - cmake
     run:
         - libgcc  # [unix]
-        - hdf5
+        - hdf5 1.8.15*
 
 test:
     commands:
