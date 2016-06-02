@@ -10,17 +10,17 @@ source:
     md5: 774b74580e3cbc5b0d45c6ec345a64ae
 
 build:
-    number: 2
+    number: 3
     skip: true    # [win]
 
 requirements:
     build:
         - gcc     # [unix]
-        - hdf5 1.8.17*
+        - hdf5 1.8.17|1.8.17.*
         - cmake
     run:
         - libgcc  # [unix]
-        - hdf5 1.8.17*
+        - hdf5 1.8.17|1.8.17.*
 
 test:
     commands:
