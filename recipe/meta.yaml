@@ -8,13 +8,21 @@ source:
     fn: flann-{{ version }}.tar.gz
     url: https://github.com/mariusmuja/flann/archive/{{ version }}.tar.gz
     sha256: 59a9925dac0705b281496ae52b5dfd79d6b69316d37015e3d3b38c859bac4f2f
+    
+    patches:
+      # Borrowed from https://github.com/mariusmuja/flann/issues/82
+      - win64_serialization.patch  # [win64]
 
 build:
-    number: 0
-    skip: true    # [win]
+    number: 1
+    features:
+        - vc9   # [win and py27]
+        - vc10  # [win and py34]
+        - vc14  # [win and py35]
 
 requirements:
     build:
+        - python  # [win]
         - gcc     # [unix]
         - hdf5 1.8.17|1.8.17.*
         - cmake
@@ -23,14 +31,24 @@ requirements:
         - hdf5 1.8.17|1.8.17.*
 
 test:
+    requires:
+        - python {{ environ['PY_VER'] + '*' }}  # [win]
+
     commands:
         # Verify libraries.
-        - test -f $PREFIX/lib/libflann_s.a                                        # [unix]
-        - test -f $PREFIX/lib/libflann.dylib                                      # [osx]
-        - test -f $PREFIX/lib/libflann.so                                         # [linux]
-        - test -f $PREFIX/lib/libflann_cpp_s.a                                    # [unix]
-        - test -f $PREFIX/lib/libflann_cpp.dylib                                  # [osx]
-        - test -f $PREFIX/lib/libflann_cpp.so                                     # [linux]
+        - test -d $PREFIX/include/flann                                    # [unix]
+        - test -f $PREFIX/lib/libflann_s.a                                 # [unix]
+        - test -f $PREFIX/lib/libflann.dylib                               # [osx]
+        - test -f $PREFIX/lib/libflann.so                                  # [linux]
+        - test -f $PREFIX/lib/libflann_cpp_s.a                             # [unix]
+        - test -f $PREFIX/lib/libflann_cpp.dylib                           # [osx]
+        - test -f $PREFIX/lib/libflann_cpp.so                              # [linux]
+        - if not exist %PREFIX%\\Library\\lib\\flann.lib exit 1            # [win]
+        - if not exist %PREFIX%\\Library\\lib\\flann_cpp_s.lib exit 1      # [win]
+        - if not exist %PREFIX%\\Library\\lib\\flann_s.lib exit 1          # [win]
+        - if not exist %PREFIX%\\Library\\bin\\flann.dll exit 1            # [win]
+        - if not exist %PREFIX%\\Library\\bin\\flann_cpp.dll exit 1        # [win]
+        - if not exist %PREFIX%\\Library\\include\\flann exit 1            # [win]
 
 about:
     home: http://www.cs.ubc.ca/research/flann/
