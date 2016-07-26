@@ -1,4 +1,4 @@
-{% set version = "1.8.4" %}
+{% set version = "1.8.5" %}
 
 package:
     name: flann
@@ -7,7 +7,7 @@ package:
 source:
     fn: flann-{{ version }}.tar.gz
     url: https://github.com/mariusmuja/flann/archive/{{ version }}.tar.gz
-    md5: 774b74580e3cbc5b0d45c6ec345a64ae
+    sha256: 59a9925dac0705b281496ae52b5dfd79d6b69316d37015e3d3b38c859bac4f2f
     
     patches:
       # Borrowed from https://github.com/mariusmuja/flann/issues/82
@@ -23,12 +23,12 @@ build:
 requirements:
     build:
         - python  # [win]
-        - gcc     # [osx]
-        - hdf5
+        - gcc     # [unix]
+        - hdf5 1.8.17|1.8.17.*
         - cmake
     run:
-        - libgcc  # [osx]
-        - hdf5
+        - libgcc  # [unix]
+        - hdf5 1.8.17|1.8.17.*
 
 test:
     requires:
