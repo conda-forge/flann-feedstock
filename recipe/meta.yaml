@@ -10,17 +10,17 @@ source:
     sha256: 59a9925dac0705b281496ae52b5dfd79d6b69316d37015e3d3b38c859bac4f2f
 
 build:
-    number: 0
+    number: 1
     skip: true    # [win]
 
 requirements:
     build:
         - gcc     # [unix]
-        - hdf5 1.8.17|1.8.17.*
+        - hdf5 1.8.18|1.8.18.*
         - cmake
     run:
         - libgcc  # [unix]
-        - hdf5 1.8.17|1.8.17.*
+        - hdf5 1.8.18|1.8.18.*
 
 test:
     commands:
