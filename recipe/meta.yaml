@@ -1,4 +1,4 @@
-{% set version = "1.8.5" %}
+{% set version = "1.9.1" %}
 
 package:
     name: flann
@@ -7,10 +7,10 @@ package:
 source:
     fn: flann-{{ version }}.tar.gz
     url: https://github.com/mariusmuja/flann/archive/{{ version }}.tar.gz
-    sha256: 59a9925dac0705b281496ae52b5dfd79d6b69316d37015e3d3b38c859bac4f2f
+    sha256: b23b5f4e71139faa3bcb39e6bbcc76967fbaf308c4ee9d4f5bfbeceaa76cc5d3
 
 build:
-    number: 1
+    number: 0
     skip: true    # [win]
 
 requirements:
