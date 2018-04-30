@@ -28,19 +28,21 @@ requirements:
 
 test:
     commands:
-        # Verify libraries.
-        - test -d $PREFIX/include/flann                                           # [not win]
-        - test -f $PREFIX/lib/libflann_s.a                                        # [unix]
-        - test -f $PREFIX/lib/libflann.dylib                                      # [osx]
-        - test -f $PREFIX/lib/libflann.so                                         # [linux]
-        - test -f $PREFIX/lib/libflann_cpp_s.a                                    # [unix]
-        - test -f $PREFIX/lib/libflann_cpp.dylib                                  # [osx]
-        - test -f $PREFIX/lib/libflann_cpp.so                                     # [linux]
-        - if not exist %LIBRARY_LIB%\\flann_cpp_s.lib exit 1                      # [win]
-        - if not exist %LIBRARY_LIB%\\flann_s.lib exit 1                          # [win]
-        - if not exist %LIBRARY_LIB%\\flann.lib exit 1                            # [win]
-        - if not exist %LIBRARY_BIN%\\flann.dll exit 1                            # [win]
-        - if not exist %LIBRARY_INC%\\flann exit 1                                # [win]
+        - conda inspect linkages -p $PREFIX flann  # [not win]
+        - conda inspect objects -p $PREFIX flann   # [osx]
+        # Verify libraries exist
+        - test -d $PREFIX/include/flann                       # [not win]
+        - test -f $PREFIX/lib/libflann_s.a                    # [unix]
+        - test -f $PREFIX/lib/libflann.dylib                  # [osx]
+        - test -f $PREFIX/lib/libflann.so                     # [linux]
+        - test -f $PREFIX/lib/libflann_cpp_s.a                # [unix]
+        - test -f $PREFIX/lib/libflann_cpp.dylib              # [osx]
+        - test -f $PREFIX/lib/libflann_cpp.so                 # [linux]
+        - if not exist %LIBRARY_LIB%\\flann_cpp_s.lib exit 1  # [win]
+        - if not exist %LIBRARY_LIB%\\flann_s.lib exit 1      # [win]
+        - if not exist %LIBRARY_LIB%\\flann.lib exit 1        # [win]
+        - if not exist %LIBRARY_BIN%\\flann.dll exit 1        # [win]
+        - if not exist %LIBRARY_INC%\\flann exit 1            # [win]
 
 about:
     home: http://www.cs.ubc.ca/research/flann/
