@@ -34,10 +34,9 @@ test:
                 "flann"
         ] %}
         {% for each_flann_lib in flann_libs %}
-        - test -f $PREFIX/lib/lib{{ each_flann_lib}}.a                  # [unix]
+        - test -f $PREFIX/lib/lib{{ each_flann_lib}}_s.a                # [unix]
         - test -f $PREFIX/lib/lib{{ each_flann_lib}}.dylib              # [osx]
         - test -f $PREFIX/lib/lib{{ each_flann_lib}}.so                 # [linux]
-        - test -f $PREFIX/lib/lib{{ each_flann_lib}}_s.a                # [linux or osx]
         - if not exist %LIBRARY_BIN%\\{{ each_flann_lib}}.dll exit 1    # [win]
         - if not exist %LIBRARY_LIB%\\{{ each_flann_lib}}_s.lib exit 1  # [win]
         {% endfor %}
