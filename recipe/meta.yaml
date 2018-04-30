@@ -20,29 +20,31 @@ requirements:
     build:
         - gcc     # [unix]
         - {{ compiler('cxx') }}  # [win]
-        - hdf5 1.8.18|1.8.18.*
+        - hdf5 1.10.1|1.10.1.*
         - cmake
     run:
         - libgcc  # [unix]
-        - hdf5 1.8.18|1.8.18.*
+        - hdf5 1.10.1|1.10.1.*
 
 test:
     commands:
-        - conda inspect linkages -p $PREFIX flann  # [not win]
-        - conda inspect objects -p $PREFIX flann   # [osx]
         # Verify libraries exist
-        - test -d $PREFIX/include/flann                       # [not win]
-        - test -f $PREFIX/lib/libflann_s.a                    # [unix]
-        - test -f $PREFIX/lib/libflann.dylib                  # [osx]
-        - test -f $PREFIX/lib/libflann.so                     # [linux]
-        - test -f $PREFIX/lib/libflann_cpp_s.a                # [unix]
-        - test -f $PREFIX/lib/libflann_cpp.dylib              # [osx]
-        - test -f $PREFIX/lib/libflann_cpp.so                 # [linux]
-        - if not exist %LIBRARY_LIB%\\flann_cpp_s.lib exit 1  # [win]
-        - if not exist %LIBRARY_LIB%\\flann_s.lib exit 1      # [win]
-        - if not exist %LIBRARY_LIB%\\flann.lib exit 1        # [win]
-        - if not exist %LIBRARY_BIN%\\flann.dll exit 1        # [win]
-        - if not exist %LIBRARY_INC%\\flann exit 1            # [win]
+        {% set flann_libs = [
+                "flann_cpp",
+                "flann"
+        ] %}
+        {% for each_flann_lib in flann_libs %}
+        - test -f $PREFIX/lib/lib{{ each_flann_lib}}.a                  # [unix]
+        - test -f $PREFIX/lib/lib{{ each_flann_lib}}.dylib              # [osx]
+        - test -f $PREFIX/lib/lib{{ each_flann_lib}}.so                 # [linux]
+        - test -f $PREFIX/lib/lib{{ each_flann_lib}}_s.a                # [linux or osx]
+        - if not exist %LIBRARY_BIN%\\{{ each_flann_lib}}.dll exit 1    # [win]
+        - if not exist %LIBRARY_LIB%\\{{ each_flann_lib}}_s.lib exit 1  # [win]
+        {% endfor %}
+        - test -d $PREFIX/include/flann                 # [not win]
+        - if not exist %LIBRARY_INC%\\flann exit 1      # [win]
+        - conda inspect linkages -p $PREFIX flann       # [not win]
+        - conda inspect objects -p $PREFIX flann        # [osx]
 
 about:
     home: http://www.cs.ubc.ca/research/flann/
