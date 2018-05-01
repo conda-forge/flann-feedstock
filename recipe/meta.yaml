@@ -12,19 +12,23 @@ source:
         # CMake 3.11 breaks FLANN's existing src/cpp/CMakeLists.txt. See
         # https://github.com/mariusmuja/flann/issues/369 for more information.
         - src-cpp-fix-cmake-3.11-build.patch
+        # This serializer workaround for VS 2013 doesn't work correctly in VC9.
+        - remove-serializer-workaround.patch
 
 build:
-    number: 1
+    number: 2
 
 requirements:
     build:
-        - gcc     # [unix]
-        - {{ compiler('cxx') }}  # [win]
-        - hdf5 1.10.1|1.10.1.*
+        - {{ compiler('cxx') }}  # [not osx]
+        - gcc     # [osx]
         - cmake
+    host:
+        - libgcc  # [osx]
+        - hdf5
     run:
-        - libgcc  # [unix]
-        - hdf5 1.10.1|1.10.1.*
+        - libgcc  # [osx]
+        - hdf5
 
 test:
     commands:
