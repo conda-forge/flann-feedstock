@@ -1,0 +1,18 @@
+diff --git a/src/cpp/flann/util/serialization.h b/src/cpp/flann/util/serialization.h
+index d731021..fbb0dbd 100644
+--- a/src/cpp/flann/util/serialization.h
++++ b/src/cpp/flann/util/serialization.h
+@@ -106,13 +106,6 @@ BASIC_TYPE_SERIALIZER(unsigned long long);
+ BASIC_TYPE_SERIALIZER(float);
+ BASIC_TYPE_SERIALIZER(double);
+ BASIC_TYPE_SERIALIZER(bool);
+-#ifdef _MSC_VER
+-// unsigned __int64 ~= unsigned long long
+-// Will throw error on VS2013
+-#if _MSC_VER < 1800
+-BASIC_TYPE_SERIALIZER(unsigned __int64);
+-#endif
+-#endif
+ 
+ 
+ // serializer for std::vector
