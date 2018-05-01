@@ -22,11 +22,13 @@ requirements:
     build:
         - gcc     # [unix]
         - {{ compiler('cxx') }}  # [win]
-        - hdf5 1.10.1|1.10.1.*
         - cmake
+    host:
+        - libgcc  # [unix]
+        - hdf5
     run:
         - libgcc  # [unix]
-        - hdf5 1.10.1|1.10.1.*
+        - {{ pin_compatible('hdf5', max_pin='x.x.x') }}
 
 test:
     commands:
