@@ -2,8 +2,6 @@ MACOSX_DEPLOYMENT_TARGET:
 - '10.9'
 cxx_compiler:
 - toolchain_cxx
-flann:
-- 1.9.1
 hdf5:
 - 1.10.1
 macos_machine:
@@ -11,7 +9,5 @@ macos_machine:
 macos_min_version:
 - '10.9'
 pin_run_as_build:
-  flann:
-    max_pin: x.x.x
   hdf5:
     max_pin: x.x.x
