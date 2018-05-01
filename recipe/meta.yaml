@@ -20,14 +20,14 @@ build:
 
 requirements:
     build:
-        - gcc     # [unix]
-        - {{ compiler('cxx') }}  # [win]
+        - {{ compiler('cxx') }}  # [not osx]
+        - gcc     # [osx]
         - cmake
     host:
-        - libgcc  # [unix]
+        - libgcc  # [osx]
         - hdf5
     run:
-        - libgcc  # [unix]
+        - libgcc  # [osx]
         - {{ pin_compatible('hdf5', max_pin='x.x.x') }}
 
 test:
