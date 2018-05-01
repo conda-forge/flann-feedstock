@@ -28,7 +28,7 @@ requirements:
         - hdf5
     run:
         - libgcc  # [osx]
-        - {{ pin_compatible('hdf5', max_pin='x.x.x') }}
+        - hdf5
 
 test:
     commands:
