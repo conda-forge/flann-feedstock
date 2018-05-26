@@ -41,11 +41,11 @@ test:
         - test -f $PREFIX/lib/lib{{ each_flann_lib }}_s.a                # [unix]
         - test -f $PREFIX/lib/lib{{ each_flann_lib }}.dylib              # [osx]
         - test -f $PREFIX/lib/lib{{ each_flann_lib }}.so                 # [linux]
-        - if not exist %LIBRARY_PREFIX%\\bin\\{{ each_flann_lib }}.dll exit 1    # [win]
-        - if not exist %LIBRARY_PREFIX%\\lib\\{{ each_flann_lib }}_s.lib exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\bin\\{{ each_flann_lib }}.dll exit 1    # [win]
+        - if not exist %PREFIX%\\Library\\lib\\{{ each_flann_lib }}_s.lib exit 1  # [win]
         {% endfor %}
         - test -d $PREFIX/include/flann                 # [not win]
-        - if not exist %LIBRARY_PREFIX%\\include\\flann exit 1      # [win]
+        - if not exist %PREFIX%\\Library\\include\\flann exit 1      # [win]
         - conda inspect linkages -p $PREFIX flann       # [not win]
         - conda inspect objects -p $PREFIX flann        # [osx]
 
