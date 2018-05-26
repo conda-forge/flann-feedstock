@@ -38,16 +38,16 @@ test:
                 "flann"
         ] %}
         {% for each_flann_lib in flann_libs %}
-        - test -f $PREFIX/lib/lib{{ each_flann_lib}}_s.a               # [unix]
-        - test -f $PREFIX/lib/lib{{ each_flann_lib}}.dylib             # [osx]
-        - test -f $PREFIX/lib/lib{{ each_flann_lib}}.so                # [linux]
-        - if not exist %LIBRARY_BIN%\{{ each_flann_lib}}.dll exit 1    # [win]
-        - if not exist %LIBRARY_LIB%\{{ each_flann_lib}}_s.lib exit 1  # [win]
+        - test -f $PREFIX/lib/lib{{ each_flann_lib }}_s.a                # [unix]
+        - test -f $PREFIX/lib/lib{{ each_flann_lib }}.dylib              # [osx]
+        - test -f $PREFIX/lib/lib{{ each_flann_lib }}.so                 # [linux]
+        - if not exist %LIBRARY_BIN%\\{{ each_flann_lib }}.dll exit 1    # [win]
+        - if not exist %LIBRARY_LIB%\\{{ each_flann_lib }}_s.lib exit 1  # [win]
         {% endfor %}
-        - test -d $PREFIX/include/flann                # [not win]
-        - if not exist %LIBRARY_INC%\flann exit 1      # [win]
-        - conda inspect linkages -p $PREFIX flann      # [not win]
-        - conda inspect objects -p $PREFIX flann       # [osx]
+        - test -d $PREFIX/include/flann                 # [not win]
+        - if not exist %LIBRARY_INC%\\flann exit 1      # [win]
+        - conda inspect linkages -p $PREFIX flann       # [not win]
+        - conda inspect objects -p $PREFIX flann        # [osx]
 
 about:
     home: http://www.cs.ubc.ca/research/flann/
