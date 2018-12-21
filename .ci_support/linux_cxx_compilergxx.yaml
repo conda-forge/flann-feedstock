@@ -7,12 +7,9 @@ channel_targets:
 cxx_compiler:
 - gxx
 docker_image:
-- conda/c3i-linux-64
+- condaforge/linux-anvil-comp7
 hdf5:
-- 1.10.3
-pin_run_as_build:
-  hdf5:
-    max_pin: x.x.x
+- 1.10.4
 zip_keys:
 - - cxx_compiler
   - channel_sources
