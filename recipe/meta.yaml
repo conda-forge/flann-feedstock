@@ -16,18 +16,16 @@ source:
         - remove-serializer-workaround.patch
 
 build:
-    number: 1004
+    number: 1005
 
 requirements:
     build:
-        - {{ compiler('cxx') }}  # [not osx]
-        - gcc     # [osx]
+        - {{ compiler('cxx') }}
         - cmake
     host:
-        - libgcc  # [osx]
         - hdf5
+        - llvm-openmp  # [osx]
     run:
-        - libgcc  # [osx]
         - hdf5
 
 test:

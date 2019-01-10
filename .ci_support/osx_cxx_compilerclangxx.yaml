@@ -3,11 +3,11 @@ MACOSX_DEPLOYMENT_TARGET:
 build_number_decrement:
 - '0'
 channel_sources:
-- conda-forge,defaults
+- conda-forge/label/gcc7,defaults
 channel_targets:
-- conda-forge main
-docker_image:
-- condaforge/linux-anvil
+- conda-forge gcc7
+cxx_compiler:
+- clangxx
 hdf5:
 - 1.10.4
 macos_machine:
@@ -15,6 +15,7 @@ macos_machine:
 macos_min_version:
 - '10.9'
 zip_keys:
-- - channel_sources
+- - cxx_compiler
+  - channel_sources
   - channel_targets
   - build_number_decrement
