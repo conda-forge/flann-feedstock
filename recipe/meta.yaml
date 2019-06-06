@@ -16,7 +16,8 @@ source:
         - remove-serializer-workaround.patch
 
 build:
-    number: 1005
+    skip: True  # [win and vc<14]
+    number: 1006
 
 requirements:
     build:
