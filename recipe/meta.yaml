@@ -17,7 +17,7 @@ source:
 
 build:
     skip: True  # [win and vc<14]
-    number: 1006
+    number: 1007
 
 requirements:
     build:
@@ -41,6 +41,7 @@ test:
         - test -f $PREFIX/lib/lib{{ each_flann_lib }}.dylib              # [osx]
         - test -f $PREFIX/lib/lib{{ each_flann_lib }}.so                 # [linux]
         - if not exist %PREFIX%\\Library\\bin\\{{ each_flann_lib }}.dll exit 1    # [win]
+        - if not exist %PREFIX%\\Library\\bin\\{{ each_flann_lib }}.lib exit 1    # [win]
         - if not exist %PREFIX%\\Library\\lib\\{{ each_flann_lib }}_s.lib exit 1  # [win]
         {% endfor %}
         - test -d $PREFIX/include/flann                 # [not win]
