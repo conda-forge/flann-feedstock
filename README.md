@@ -3,7 +3,7 @@ About flann
 
 Home: http://www.cs.ubc.ca/research/flann/
 
-Package license: BSD 3-Clause
+Package license: BSD-3-Clause
 
 Feedstock license: BSD 3-Clause
 
@@ -158,4 +158,5 @@ Feedstock Maintainers
 * [@dougalsutherland](https://github.com/dougalsutherland/)
 * [@jakevdp](https://github.com/jakevdp/)
 * [@jakirkham](https://github.com/jakirkham/)
+* [@seanyen](https://github.com/seanyen/)
 
