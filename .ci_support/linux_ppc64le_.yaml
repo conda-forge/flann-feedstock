@@ -5,8 +5,10 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '7'
+- '8'
 docker_image:
-- condaforge/linux-anvil-comp7
+- condaforge/linux-anvil-ppc64le
 hdf5:
 - 1.10.6
+target_platform:
+- linux-ppc64le
