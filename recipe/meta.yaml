@@ -48,8 +48,6 @@ test:
         {% endfor %}
         - test -d $PREFIX/include/flann                 # [not win]
         - if not exist %PREFIX%\\Library\\include\\flann exit 1      # [win]
-        - conda inspect linkages -p $PREFIX flann       # [not win]
-        - conda inspect objects -p $PREFIX flann        # [osx]
 
 about:
     home: http://www.cs.ubc.ca/research/flann/

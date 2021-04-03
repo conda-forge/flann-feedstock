@@ -11,7 +11,7 @@ if [[ `uname` == Darwin ]]; then
     export CXX=g++
 fi
 
-cmake .. \
+cmake ${CMAKE_ARGS} .. \
 	 -DCMAKE_INSTALL_PREFIX=$PREFIX \
 	 -DBUILD_MATLAB_BINDINGS:BOOL=OFF \
 	 -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
