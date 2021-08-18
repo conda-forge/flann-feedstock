@@ -3,7 +3,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 hdf5:
-- 1.10.6
+- 1.12.1
 target_platform:
 - win-64
 vc:

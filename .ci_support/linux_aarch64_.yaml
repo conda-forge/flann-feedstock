@@ -15,6 +15,6 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-aarch64
 hdf5:
-- 1.10.6
+- 1.12.1
 target_platform:
 - linux-aarch64
