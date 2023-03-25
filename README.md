@@ -1,11 +1,11 @@
-About flann
-===========
+About flann-feedstock
+=====================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/flann-feedstock/blob/main/LICENSE.txt)
 
 Home: http://www.cs.ubc.ca/research/flann/
 
 Package license: BSD-3-Clause
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/flann-feedstock/blob/main/LICENSE.txt)
 
 Summary: The Fast Library for Approximate Nearest Neighbors
 
