@@ -16,15 +16,14 @@ source:
         - remove-serializer-workaround.patch
 
 build:
-    skip: True  # [win and vc<14]
-    number: 1011
+    number: 1012
 
 requirements:
     build:
-        - {{ compiler('cxx') }}  # [not win64]
-        - vs2017_win-64  # [win64]
+        - {{ compiler('cxx') }}
         - cmake
-        - make  # [unix]
+        - make         # [unix]
+        - libgomp      # [linux]
     host:
         - hdf5
         - llvm-openmp  # [osx]
