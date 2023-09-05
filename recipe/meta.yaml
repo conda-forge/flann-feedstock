@@ -54,6 +54,7 @@ about:
 
 extra:
   recipe-maintainers:
+    - traversaro
     - jakevdp
     - jakirkham
     - djsutherland
