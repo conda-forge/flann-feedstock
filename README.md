@@ -3,7 +3,7 @@ About flann-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/flann-feedstock/blob/main/LICENSE.txt)
 
-Home: http://www.cs.ubc.ca/research/flann/
+Home: https://github.com/flann-lib/flann/
 
 Package license: BSD-3-Clause
 
@@ -201,4 +201,5 @@ Feedstock Maintainers
 * [@jakevdp](https://github.com/jakevdp/)
 * [@jakirkham](https://github.com/jakirkham/)
 * [@seanyen](https://github.com/seanyen/)
+* [@traversaro](https://github.com/traversaro/)
 
