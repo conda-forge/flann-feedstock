@@ -57,3 +57,86 @@ index 0000000..8d686c8
 +  endif ()
 +endif ()
 \ No newline at end of file
+diff --git a/cmake/flann.pc.in b/cmake/flann.pc.in
+index 07b8d64..82eee5e 100644
+--- a/cmake/flann.pc.in
++++ b/cmake/flann.pc.in
+@@ -8,6 +8,6 @@ Name: @PROJECT_NAME@
+ Description: @PKG_DESC@
+ Version: @FLANN_VERSION@
+ Requires: @PKG_EXTERNAL_DEPS@
+-Libs: -L${libdir} @LZ4_STATIC_LDFLAGS@ -lflann -lflann_cpp
++Libs: -L${libdir} -lflann -lflann_cpp
+ Cflags: -I${includedir}
+ 
+diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
+index a290773..4e87b0d 100644
+--- a/examples/CMakeLists.txt
++++ b/examples/CMakeLists.txt
+@@ -2,7 +2,7 @@ add_custom_target(examples ALL)
+ 
+ if (BUILD_C_BINDINGS)
+     add_executable(flann_example_c flann_example.c)
+-    target_link_libraries(flann_example_c ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann_example_c ${LZ4_LIBRARIES})
+     target_link_libraries(flann_example_c flann)
+     set_target_properties(flann_example_c PROPERTIES COMPILE_FLAGS -std=c99)
+ 
+@@ -14,7 +14,7 @@ if (HDF5_FOUND)
+     include_directories(${HDF5_INCLUDE_DIR})
+ 
+     add_executable(flann_example_cpp flann_example.cpp)
+-    target_link_libraries(flann_example_cpp ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann_example_cpp ${LZ4_LIBRARIES})
+     target_link_libraries(flann_example_cpp ${HDF5_LIBRARIES} flann_cpp)
+     if (HDF5_IS_PARALLEL)
+         target_link_libraries(flann_example_cpp ${MPI_LIBRARIES})
+@@ -26,7 +26,7 @@ if (HDF5_FOUND)
+ 
+     if (USE_MPI AND HDF5_IS_PARALLEL)
+         add_executable(flann_example_mpi flann_example_mpi.cpp)
+-        target_link_libraries(flann_example_mpi ${LZ4_LINK_LIBRARIES})
++        target_link_libraries(flann_example_mpi ${LZ4_LIBRARIES})
+         target_link_libraries(flann_example_mpi flann_cpp ${HDF5_LIBRARIES} ${MPI_LIBRARIES} ${Boost_LIBRARIES})
+ 
+         add_dependencies(examples flann_example_mpi)
+diff --git a/src/cpp/CMakeLists.txt b/src/cpp/CMakeLists.txt
+index 7603abc..3b5f682 100644
+--- a/src/cpp/CMakeLists.txt
++++ b/src/cpp/CMakeLists.txt
+@@ -9,7 +9,7 @@ file(GLOB_RECURSE CPP_SOURCES flann_cpp.cpp)
+ file(GLOB_RECURSE CU_SOURCES *.cu)
+ 
+ add_library(flann_cpp_s STATIC ${CPP_SOURCES})
+-target_link_libraries(flann_cpp_s PUBLIC ${LZ4_LINK_LIBRARIES})
++target_link_libraries(flann_cpp_s PUBLIC ${LZ4_LIBRARIES})
+ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
+     set_target_properties(flann_cpp_s PROPERTIES COMPILE_FLAGS -fPIC)
+ endif()
+@@ -20,7 +20,7 @@ else()
+ endif()
+ 
+ add_library(flann_cpp SHARED ${CPP_SOURCES})
+-target_link_libraries(flann_cpp ${LZ4_LINK_LIBRARIES})
++target_link_libraries(flann_cpp ${LZ4_LIBRARIES})
+ # export lz4 headers, so that MSVC to creates flann_cpp.lib
+ set_target_properties(flann_cpp PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
+ 
+@@ -81,7 +81,7 @@ endif()
+ 
+ if (BUILD_C_BINDINGS)
+     add_library(flann_s STATIC ${C_SOURCES})
+-    target_link_libraries(flann_s ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann_s ${LZ4_LIBRARIES})
+     if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
+         set_target_properties(flann_s PROPERTIES COMPILE_FLAGS -fPIC)
+     endif()
+@@ -93,7 +93,7 @@ if (BUILD_C_BINDINGS)
+     endif()
+ 
+     add_library(flann SHARED ${C_SOURCES})
+-    target_link_libraries(flann ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann ${LZ4_LIBRARIES})
+     list(APPEND flann_install_targets flann)
+ 
+     if(MINGW AND OPENMP_FOUND)
