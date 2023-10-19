@@ -11,6 +11,7 @@ source:
     patches:
         # This serializer workaround for VS 2013 doesn't work correctly in VC9.
         - remove-serializer-workaround.patch
+        - fix-find-lz4.patch
 
 build:
     number: 0
@@ -21,7 +22,6 @@ requirements:
         - cmake
         - make         # [unix]
         - libgomp      # [linux]
-        - pkg-config
     host:
         - hdf5
         - lz4-c
