@@ -9,6 +9,8 @@ cmake -G "NMake Makefiles" ^
       -DBUILD_PYTHON_BINDINGS:BOOL=OFF ^
       -DBUILD_EXAMPLES:BOOL=OFF ^
       -DBUILD_DOC:BOOL=OFF ^
+      -DLZ4_LIBRARIES:PATH="%LIBRARY_LIB%\liblz4.lib" ^
+      -DLZ4_INCLUDE_DIRS:PATH="%LIBRARY_INC%" ^
       %SRC_DIR%
 if errorlevel 1 exit 1
 
