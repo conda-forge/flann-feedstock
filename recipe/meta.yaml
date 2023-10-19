@@ -21,8 +21,10 @@ requirements:
         - cmake
         - make         # [unix]
         - libgomp      # [linux]
+        - pkg-config
     host:
         - hdf5
+        - lz4-c
         - llvm-openmp  # [osx]
 
 test:
