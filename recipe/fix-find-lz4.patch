@@ -101,28 +101,28 @@ index a290773..4e87b0d 100644
  
          add_dependencies(examples flann_example_mpi)
 diff --git a/src/cpp/CMakeLists.txt b/src/cpp/CMakeLists.txt
-index 7603abc..3b5f682 100644
+index d8bff04..1b5b237 100644
 --- a/src/cpp/CMakeLists.txt
 +++ b/src/cpp/CMakeLists.txt
 @@ -9,7 +9,7 @@ file(GLOB_RECURSE CPP_SOURCES flann_cpp.cpp)
  file(GLOB_RECURSE CU_SOURCES *.cu)
  
  add_library(flann_cpp_s STATIC ${CPP_SOURCES})
--target_link_libraries(flann_cpp_s PUBLIC ${LZ4_LINK_LIBRARIES})
-+target_link_libraries(flann_cpp_s PUBLIC ${LZ4_LIBRARIES})
+-target_link_libraries(flann_cpp_s ${LZ4_LINK_LIBRARIES})
++target_link_libraries(flann_cpp_s ${LZ4_LIBRARIES})
  if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
      set_target_properties(flann_cpp_s PROPERTIES COMPILE_FLAGS -fPIC)
  endif()
-@@ -20,7 +20,7 @@ else()
- endif()
- 
- add_library(flann_cpp SHARED ${CPP_SOURCES})
--target_link_libraries(flann_cpp ${LZ4_LINK_LIBRARIES})
-+target_link_libraries(flann_cpp ${LZ4_LIBRARIES})
- # export lz4 headers, so that MSVC to creates flann_cpp.lib
- set_target_properties(flann_cpp PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
- 
-@@ -81,7 +81,7 @@ endif()
+@@ -42,7 +42,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_COMPILER_IS_GNUCC)
+     endif()
+ else()
+     add_library(flann_cpp SHARED ${CPP_SOURCES})
+-    target_link_libraries(flann_cpp ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann_cpp ${LZ4_LIBRARIES})
+     # export lz4 headers, so that MSVC to creates flann_cpp.lib
+     set_target_properties(flann_cpp PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
+     if (BUILD_CUDA_LIB)
+@@ -80,7 +80,7 @@ endif()
  
  if (BUILD_C_BINDINGS)
      add_library(flann_s STATIC ${C_SOURCES})
@@ -131,12 +131,12 @@ index 7603abc..3b5f682 100644
      if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
          set_target_properties(flann_s PROPERTIES COMPILE_FLAGS -fPIC)
      endif()
-@@ -93,7 +93,7 @@ if (BUILD_C_BINDINGS)
-     endif()
+@@ -92,7 +92,7 @@ if (BUILD_C_BINDINGS)
+         target_link_libraries(flann -Wl,-whole-archive flann_s -Wl,-no-whole-archive)
+     else()
+         add_library(flann SHARED ${C_SOURCES})
+-        target_link_libraries(flann ${LZ4_LINK_LIBRARIES})
++        target_link_libraries(flann ${LZ4_LIBRARIES})
  
-     add_library(flann SHARED ${C_SOURCES})
--    target_link_libraries(flann ${LZ4_LINK_LIBRARIES})
-+    target_link_libraries(flann ${LZ4_LIBRARIES})
-     list(APPEND flann_install_targets flann)
- 
-     if(MINGW AND OPENMP_FOUND)
+         if(MINGW AND OPENMP_FOUND)
+           target_link_libraries(flann gomp)
