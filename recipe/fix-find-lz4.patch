@@ -1,0 +1,142 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f79d173..d94d047 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -147,8 +147,7 @@ if (BUILD_CUDA_LIB)
+     endif(CUDA_FOUND)
+ endif(BUILD_CUDA_LIB)
+ 
+-find_package(PkgConfig REQUIRED)
+-pkg_check_modules(LZ4 REQUIRED liblz4)
++find_package(LZ4 REQUIRED)
+ include_directories(${LZ4_INCLUDE_DIRS})
+ 
+ #set the C/C++ include path to the "include" directory
+diff --git a/cmake/FindLZ4.cmake b/cmake/FindLZ4.cmake
+new file mode 100644
+index 0000000..8d686c8
+--- /dev/null
++++ b/cmake/FindLZ4.cmake
+@@ -0,0 +1,38 @@
++find_path(LZ4_INCLUDE_DIR
++  NAMES lz4.h
++  DOC "lz4 include directory")
++mark_as_advanced(LZ4_INCLUDE_DIR)
++find_library(LZ4_LIBRARY
++  NAMES lz4 liblz4
++  DOC "lz4 library")
++mark_as_advanced(LZ4_LIBRARY)
++
++if (LZ4_INCLUDE_DIR)
++  file(STRINGS "${LZ4_INCLUDE_DIR}/lz4.h" _lz4_version_lines
++    REGEX "#define[ \t]+LZ4_VERSION_(MAJOR|MINOR|RELEASE)")
++  string(REGEX REPLACE ".*LZ4_VERSION_MAJOR *\([0-9]*\).*" "\\1" _lz4_version_major "${_lz4_version_lines}")
++  string(REGEX REPLACE ".*LZ4_VERSION_MINOR *\([0-9]*\).*" "\\1" _lz4_version_minor "${_lz4_version_lines}")
++  string(REGEX REPLACE ".*LZ4_VERSION_RELEASE *\([0-9]*\).*" "\\1" _lz4_version_release "${_lz4_version_lines}")
++  set(LZ4_VERSION "${_lz4_version_major}.${_lz4_version_minor}.${_lz4_version_release}")
++  unset(_lz4_version_major)
++  unset(_lz4_version_minor)
++  unset(_lz4_version_release)
++  unset(_lz4_version_lines)
++endif ()
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(LZ4
++  REQUIRED_VARS LZ4_LIBRARY LZ4_INCLUDE_DIR
++  VERSION_VAR LZ4_VERSION)
++
++if (LZ4_FOUND)
++  set(LZ4_INCLUDE_DIRS "${LZ4_INCLUDE_DIR}")
++  set(LZ4_LIBRARIES "${LZ4_LIBRARY}")
++
++  if (NOT TARGET LZ4::LZ4)
++    add_library(LZ4::LZ4 UNKNOWN IMPORTED)
++    set_target_properties(LZ4::LZ4 PROPERTIES
++      IMPORTED_LOCATION "${LZ4_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES "${LZ4_INCLUDE_DIR}")
++  endif ()
++endif ()
+\ No newline at end of file
+diff --git a/cmake/flann.pc.in b/cmake/flann.pc.in
+index 07b8d64..82eee5e 100644
+--- a/cmake/flann.pc.in
++++ b/cmake/flann.pc.in
+@@ -8,6 +8,6 @@ Name: @PROJECT_NAME@
+ Description: @PKG_DESC@
+ Version: @FLANN_VERSION@
+ Requires: @PKG_EXTERNAL_DEPS@
+-Libs: -L${libdir} @LZ4_STATIC_LDFLAGS@ -lflann -lflann_cpp
++Libs: -L${libdir} -lflann -lflann_cpp
+ Cflags: -I${includedir}
+ 
+diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
+index a290773..4e87b0d 100644
+--- a/examples/CMakeLists.txt
++++ b/examples/CMakeLists.txt
+@@ -2,7 +2,7 @@ add_custom_target(examples ALL)
+ 
+ if (BUILD_C_BINDINGS)
+     add_executable(flann_example_c flann_example.c)
+-    target_link_libraries(flann_example_c ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann_example_c ${LZ4_LIBRARIES})
+     target_link_libraries(flann_example_c flann)
+     set_target_properties(flann_example_c PROPERTIES COMPILE_FLAGS -std=c99)
+ 
+@@ -14,7 +14,7 @@ if (HDF5_FOUND)
+     include_directories(${HDF5_INCLUDE_DIR})
+ 
+     add_executable(flann_example_cpp flann_example.cpp)
+-    target_link_libraries(flann_example_cpp ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann_example_cpp ${LZ4_LIBRARIES})
+     target_link_libraries(flann_example_cpp ${HDF5_LIBRARIES} flann_cpp)
+     if (HDF5_IS_PARALLEL)
+         target_link_libraries(flann_example_cpp ${MPI_LIBRARIES})
+@@ -26,7 +26,7 @@ if (HDF5_FOUND)
+ 
+     if (USE_MPI AND HDF5_IS_PARALLEL)
+         add_executable(flann_example_mpi flann_example_mpi.cpp)
+-        target_link_libraries(flann_example_mpi ${LZ4_LINK_LIBRARIES})
++        target_link_libraries(flann_example_mpi ${LZ4_LIBRARIES})
+         target_link_libraries(flann_example_mpi flann_cpp ${HDF5_LIBRARIES} ${MPI_LIBRARIES} ${Boost_LIBRARIES})
+ 
+         add_dependencies(examples flann_example_mpi)
+diff --git a/src/cpp/CMakeLists.txt b/src/cpp/CMakeLists.txt
+index d8bff04..1b5b237 100644
+--- a/src/cpp/CMakeLists.txt
++++ b/src/cpp/CMakeLists.txt
+@@ -9,7 +9,7 @@ file(GLOB_RECURSE CPP_SOURCES flann_cpp.cpp)
+ file(GLOB_RECURSE CU_SOURCES *.cu)
+ 
+ add_library(flann_cpp_s STATIC ${CPP_SOURCES})
+-target_link_libraries(flann_cpp_s ${LZ4_LINK_LIBRARIES})
++target_link_libraries(flann_cpp_s ${LZ4_LIBRARIES})
+ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
+     set_target_properties(flann_cpp_s PROPERTIES COMPILE_FLAGS -fPIC)
+ endif()
+@@ -42,7 +42,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_COMPILER_IS_GNUCC)
+     endif()
+ else()
+     add_library(flann_cpp SHARED ${CPP_SOURCES})
+-    target_link_libraries(flann_cpp ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann_cpp ${LZ4_LIBRARIES})
+     # export lz4 headers, so that MSVC to creates flann_cpp.lib
+     set_target_properties(flann_cpp PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
+     if (BUILD_CUDA_LIB)
+@@ -80,7 +80,7 @@ endif()
+ 
+ if (BUILD_C_BINDINGS)
+     add_library(flann_s STATIC ${C_SOURCES})
+-    target_link_libraries(flann_s ${LZ4_LINK_LIBRARIES})
++    target_link_libraries(flann_s ${LZ4_LIBRARIES})
+     if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
+         set_target_properties(flann_s PROPERTIES COMPILE_FLAGS -fPIC)
+     endif()
+@@ -92,7 +92,7 @@ if (BUILD_C_BINDINGS)
+         target_link_libraries(flann -Wl,-whole-archive flann_s -Wl,-no-whole-archive)
+     else()
+         add_library(flann SHARED ${C_SOURCES})
+-        target_link_libraries(flann ${LZ4_LINK_LIBRARIES})
++        target_link_libraries(flann ${LZ4_LIBRARIES})
+ 
+         if(MINGW AND OPENMP_FOUND)
+           target_link_libraries(flann gomp)
