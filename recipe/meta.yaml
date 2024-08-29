@@ -14,13 +14,14 @@ source:
         - fix-find-lz4.patch
 
 build:
-    number: 0
+    number: 1
     run_exports:
         - {{ pin_subpackage('flann', max_pin='x.x.x') }}
 
 requirements:
     build:
         - {{ compiler('cxx') }}
+        - {{ stdlib('c') }}
         - cmake
         - make         # [unix]
         - libgomp      # [linux]
