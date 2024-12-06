@@ -19,6 +19,6 @@ flann:
 hdf5:
 - 1.14.4
 lz4_c:
-- 1.9.3
+- '1.10'
 target_platform:
 - linux-aarch64
