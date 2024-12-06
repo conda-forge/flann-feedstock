@@ -14,7 +14,7 @@ source:
         - fix-find-lz4.patch
 
 build:
-    number: 3
+    number: 4
     run_exports:
         - {{ pin_subpackage('flann', max_pin='x.x.x') }}
 
