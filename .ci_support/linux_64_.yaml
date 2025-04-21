@@ -17,8 +17,8 @@ docker_image:
 flann:
 - 1.9.2
 hdf5:
-- 1.14.4
+- 1.14.6
 lz4_c:
 - '1.10'
 target_platform:
-- linux-ppc64le
+- linux-64
