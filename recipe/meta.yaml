@@ -12,9 +12,10 @@ source:
         # This serializer workaround for VS 2013 doesn't work correctly in VC9.
         - remove-serializer-workaround.patch
         - fix-find-lz4.patch
+        - 526.patch
 
 build:
-    number: 4
+    number: 5
     run_exports:
         - {{ pin_subpackage('flann', max_pin='x.x.x') }}
 
