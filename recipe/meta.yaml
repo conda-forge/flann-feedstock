@@ -15,7 +15,7 @@ source:
         - 526.patch
 
 build:
-    number: 5
+    number: 6
     run_exports:
         - {{ pin_subpackage('flann', max_pin='x.x.x') }}
 
